@@ -11,8 +11,7 @@ from pyspark.sql.window import Window
 from pyspark.sql.functions import col
 
 spark = SparkSession.builder.appName("intreview").getOrCreate()
-orders = spark.createDataFrame(
-    [
+orders =  [
         (1001, 'c01', 'IN', 250.0, '2024-01-05'),
         (1002, 'c02', 'US', 40.0, '2024-01-06'),
         (1003, 'c01', 'IN', 120.0, '2024-01-07'),
@@ -20,12 +19,12 @@ orders = spark.createDataFrame(
         (1005, 'c02', 'US', 15.0, '2024-01-08'),
         (1006, 'c04', 'IN', 300.0, '2024-01-08'),
     ],
-    ['order_id', 'customer_id', 'country', 'amount', 'order_date'],
-)
-orders.show()
+   cols= ['order_id', 'customer_id', 'country', 'amount', 'order_date'],
+df=spark.CreateDataframe("orders","cols")
+df.show()
 
 TASK ONE
-orders.filter(F.col("country")=="IN")\
+df.filter(F.col("country")=="IN")\
     .select("order_id","customer_id",F.col("amount").alias("amount_inr"))\
         .orderBy(F.col("amount_inr").desc())\
             .show()
